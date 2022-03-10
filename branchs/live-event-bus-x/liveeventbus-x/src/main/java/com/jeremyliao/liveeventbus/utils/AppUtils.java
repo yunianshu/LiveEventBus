@@ -97,7 +97,7 @@ public final class AppUtils {
             Object thread = activityThread.getMethod("currentActivityThread").invoke(null);
             Object app = activityThread.getMethod("getApplication").invoke(thread);
             if (app == null) {
-                throw new NullPointerException("u should init first");
+                return null;
             }
             return (Application) app;
         } catch (NoSuchMethodException e) {
@@ -108,8 +108,10 @@ public final class AppUtils {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        }catch (NullPointerException e){
+            e.printStackTrace();
         }
-        throw new NullPointerException("u should init first");
+        return null;
     }
 
     static ActivityLifecycleImpl getActivityLifecycle() {
