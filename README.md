@@ -41,7 +41,7 @@ allprojects {
 
 2.添加依赖
 
-implementation 'com.github.yunianshu:LiveEventBus:1.8.0.1'
+implementation 'com.github.yunianshu:LiveEventBus:TAG'
 	
 
 ## 快速开始
