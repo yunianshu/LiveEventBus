@@ -2,7 +2,8 @@ package com.jeremyliao.lebapp;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.support.test.runner.AndroidJUnit4;
+
+import androidx.test.runner.AndroidJUnit4;
 
 import com.jeremyliao.liveeventbus.utils.ThreadUtils;
 

@@ -1,12 +1,13 @@
 package com.jeremyliao.lebapp;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
+
+import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.runner.AndroidJUnit4;
 
 import com.jeremyliao.lebapp.activity.TestActivity;
 import com.jeremyliao.lebapp.helper.LiveEventBusTestHelper;
@@ -19,7 +20,6 @@ import com.jeremyliao.liveeventbus.core.Observable;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,6 +30,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
 
 /**
  * Created by liaohailiang on 2018/12/6.
@@ -676,7 +677,6 @@ public class LiveEventBusTest {
 
     @Test
     public void testClearBusOnRemove() throws Exception {
-        LiveEventBusTestHelper.clearConfigs();
         LiveEventBus.config().autoClear(true);
         final String key = "test_clear_bus_on_remove";
         int count = LiveEventBusTestHelper.getLiveEventBusCount();
@@ -686,11 +686,13 @@ public class LiveEventBusTest {
             }
         };
         LiveEventBus
+
                 .get(key)
                 .observeForever(observer);
         Thread.sleep(500);
         Assert.assertEquals(LiveEventBusTestHelper.getLiveEventBusCount(), count + 1);
         LiveEventBus
+
                 .get(key)
                 .removeObserver(observer);
         Thread.sleep(500);
@@ -699,11 +701,11 @@ public class LiveEventBusTest {
 
     @Test
     public void testClearBusOnRemoveAuto() throws Exception {
-        LiveEventBusTestHelper.clearConfigs();
         LiveEventBus.config().autoClear(true);
         final String key = "test_clear_bus_on_remove_auto";
         int count = LiveEventBusTestHelper.getLiveEventBusCount();
         LiveEventBus
+
                 .get(key, String.class)
                 .observe(rule.getActivity(), new Observer<String>() {
                     @Override
@@ -719,37 +721,13 @@ public class LiveEventBusTest {
     }
 
     @Test
-    public void testClearBusOnRemoveAutoSingle() throws Exception {
-        LiveEventBusTestHelper.clearConfigs();
-        LiveEventBus.config().autoClear(false);
-        final String key = "test_clear_bus_on_remove_auto_single";
-        LiveEventBus
-                .config(key)
-                .autoClear(true);
-        int count = LiveEventBusTestHelper.getLiveEventBusCount();
-        LiveEventBus
-                .get(key, String.class)
-                .observe(rule.getActivity(), new Observer<String>() {
-                    @Override
-                    public void onChanged(@Nullable String s) {
-                    }
-                });
-        Thread.sleep(500);
-        Assert.assertEquals(LiveEventBusTestHelper.getLiveEventBusCount(), count + 1);
-        rule.finishActivity();
-        Thread.sleep(1000);
-        Log.d("LiveEventBus", "bus.size final: " + LiveEventBusTestHelper.getLiveEventBusCount());
-        Assert.assertEquals(LiveEventBusTestHelper.getLiveEventBusCount(), count);
-    }
-
-    @Test
     public void testClearBusOnRemoveAutoAndAlwaysActiveFalse() throws Exception {
-        LiveEventBusTestHelper.clearConfigs();
         LiveEventBus.config().autoClear(true);
         LiveEventBus.config().lifecycleObserverAlwaysActive(false);
         final String key = "test_clear_bus_on_remove_auto_aaf";
         int count = LiveEventBusTestHelper.getLiveEventBusCount();
         LiveEventBus
+
                 .get(key, String.class)
                 .observe(rule.getActivity(), new Observer<String>() {
                     @Override
@@ -762,56 +740,6 @@ public class LiveEventBusTest {
         Thread.sleep(1000);
         Log.d("LiveEventBus", "bus.size final: " + LiveEventBusTestHelper.getLiveEventBusCount());
         Assert.assertEquals(LiveEventBusTestHelper.getLiveEventBusCount(), 0);
-    }
-
-    @Test
-    public void testClearBusOnRemoveAutoAndAlwaysActiveFalseSingle() throws Exception {
-        LiveEventBusTestHelper.clearConfigs();
-        LiveEventBus.config().autoClear(false);
-        LiveEventBus.config().lifecycleObserverAlwaysActive(true);
-        final String key = "test_clear_bus_on_remove_auto_aaf_single";
-        LiveEventBus
-                .config(key)
-                .autoClear(true);
-        int count = LiveEventBusTestHelper.getLiveEventBusCount();
-        LiveEventBus
-                .get(key, String.class)
-                .observe(rule.getActivity(), new Observer<String>() {
-                    @Override
-                    public void onChanged(@Nullable String s) {
-                    }
-                });
-        Thread.sleep(500);
-        Assert.assertEquals(LiveEventBusTestHelper.getLiveEventBusCount(), count + 1);
-        rule.finishActivity();
-        Thread.sleep(1000);
-        Log.d("LiveEventBus", "bus.size final: " + LiveEventBusTestHelper.getLiveEventBusCount());
-        Assert.assertEquals(LiveEventBusTestHelper.getLiveEventBusCount(), count);
-    }
-
-    @Test
-    public void testClearBusOnRemoveAutoAndAlwaysActiveFalseSingle1() throws Exception {
-        LiveEventBusTestHelper.clearConfigs();
-        LiveEventBus.config().autoClear(true);
-        LiveEventBus.config().lifecycleObserverAlwaysActive(true);
-        final String key = "test_clear_bus_on_remove_auto_aaf_single_1";
-        LiveEventBus
-                .config(key)
-                .autoClear(false);
-        int count = LiveEventBusTestHelper.getLiveEventBusCount();
-        LiveEventBus
-                .get(key, String.class)
-                .observe(rule.getActivity(), new Observer<String>() {
-                    @Override
-                    public void onChanged(@Nullable String s) {
-                    }
-                });
-        Thread.sleep(500);
-        Assert.assertEquals(LiveEventBusTestHelper.getLiveEventBusCount(), count + 1);
-        rule.finishActivity();
-        Thread.sleep(1000);
-        Log.d("LiveEventBus", "bus.size final: " + LiveEventBusTestHelper.getLiveEventBusCount());
-        Assert.assertEquals(LiveEventBusTestHelper.getLiveEventBusCount(), 1);
     }
 
     @Test

@@ -1,6 +1,7 @@
 package com.jeremyliao.lebapp;
 
-import android.support.test.runner.AndroidJUnit4;
+
+import androidx.test.runner.AndroidJUnit4;
 
 import com.jeremyliao.liveeventbus.utils.AppUtils;
 

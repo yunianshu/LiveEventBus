@@ -1,8 +1,9 @@
 package com.jeremyliao.lebapp.activity;
 
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import com.jeremyliao.lebapp.LiveEventBusDemo;
 import com.jeremyliao.lebapp.R;
@@ -20,8 +21,6 @@ public class ObserverActiveLevelActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_observer_active_level_demo);
         binding.setLifecycleOwner(this);
         binding.setHandler(this);
-        LiveEventBus.config(LiveEventBusDemo.KEY_TEST_ACTIVE_LEVEL_SINGLE)
-                .lifecycleObserverAlwaysActive(false);
     }
 
     @Override
@@ -32,12 +31,6 @@ public class ObserverActiveLevelActivity extends AppCompatActivity {
     public void sendMsgToPrevent() {
         LiveEventBus
                 .get(LiveEventBusDemo.KEY_TEST_ACTIVE_LEVEL)
-                .post("Send Msg To Observer Stopped");
-    }
-
-    public void sendMsgToPreventSingle() {
-        LiveEventBus
-                .get(LiveEventBusDemo.KEY_TEST_ACTIVE_LEVEL_SINGLE)
                 .post("Send Msg To Observer Stopped");
     }
 }

@@ -1,16 +1,16 @@
 package com.jeremyliao.lebapp;
 
-import android.arch.lifecycle.Observer;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+
 import com.jeremyliao.lebapp.activity.ObserverActiveLevelActivity;
-import com.jeremyliao.lebapp.activity.PostDelayActivity;
 import com.jeremyliao.lebapp.activity.StickyActivity;
 import com.jeremyliao.lebapp.databinding.ActivityLiveDataBusDemoBinding;
 import com.jeremyliao.lebapp.event.DemoEvent;
@@ -29,16 +29,12 @@ public class LiveEventBusDemo extends AppCompatActivity {
     public static final String KEY_TEST_MSG_SET_BEFORE_ON_CREATE = "key_test_msg_set_before_on_create";
     public static final String KEY_TEST_CLOSE_ALL_PAGE = "key_test_close_all_page";
     public static final String KEY_TEST_ACTIVE_LEVEL = "key_test_active_level";
-    public static final String KEY_TEST_ACTIVE_LEVEL_SINGLE = "key_test_active_level_single";
     public static final String KEY_TEST_BROADCAST = "key_test_broadcast";
-    public static final String KEY_TEST_BROADCAST_IN_APP = "key_test_broadcast_in_app";
-    public static final String KEY_TEST_BROADCAST_GLOBAL = "key_test_broadcast_global";
-    public static final String KEY_TEST_DELAY_LIFE = "key_test_delay_life";
+
 
     private int sendCount = 0;
     private int receiveCount = 0;
     private String randomKey = null;
-
 
     private ActivityLiveDataBusDemoBinding binding;
 
@@ -87,24 +83,6 @@ public class LiveEventBusDemo extends AppCompatActivity {
                 });
         LiveEventBus
                 .get(KEY_TEST_ACTIVE_LEVEL, String.class)
-                .observe(this, new Observer<String>() {
-                    @Override
-                    public void onChanged(@Nullable String s) {
-                        Toast.makeText(LiveEventBusDemo.this, "Receive message: " + s,
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-        LiveEventBus
-                .get(KEY_TEST_ACTIVE_LEVEL_SINGLE, String.class)
-                .observe(this, new Observer<String>() {
-                    @Override
-                    public void onChanged(@Nullable String s) {
-                        Toast.makeText(LiveEventBusDemo.this, "Receive message: " + s,
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-        LiveEventBus
-                .get(KEY_TEST_DELAY_LIFE, String.class)
                 .observe(this, new Observer<String>() {
                     @Override
                     public void onChanged(@Nullable String s) {
@@ -220,23 +198,7 @@ public class LiveEventBusDemo extends AppCompatActivity {
     public void testBroadcast() {
         LiveEventBus
                 .get(KEY_TEST_BROADCAST)
-                .postAcrossApp("broadcast msg");
-    }
-
-    public void testBroadcastInApp() {
-        LiveEventBus
-                .get(KEY_TEST_BROADCAST_IN_APP)
-                .postAcrossProcess("broadcast msg");
-    }
-
-    public void testBroadcastGlobal() {
-        LiveEventBus
-                .get(KEY_TEST_BROADCAST_GLOBAL)
-                .postAcrossApp("broadcast msg");
-    }
-
-    public void testDelayLife() {
-        startActivity(new Intent(this, PostDelayActivity.class));
+                .broadcast("broadcast msg");
     }
 
     public void sendDemoEvent() {
