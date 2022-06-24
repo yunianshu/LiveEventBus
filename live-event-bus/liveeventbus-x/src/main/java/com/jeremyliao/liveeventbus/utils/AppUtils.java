@@ -67,7 +67,9 @@ public final class AppUtils {
             } else {
                 sApplication = app;
             }
-            sApplication.registerActivityLifecycleCallbacks(ACTIVITY_LIFECYCLE);
+            if(sApplication != null){
+                sApplication.registerActivityLifecycleCallbacks(ACTIVITY_LIFECYCLE);
+            }
         } else {
             if (app != null && app.getClass() != sApplication.getClass()) {
                 sApplication.unregisterActivityLifecycleCallbacks(ACTIVITY_LIFECYCLE);
@@ -99,7 +101,7 @@ public final class AppUtils {
             Object thread = activityThread.getMethod("currentActivityThread").invoke(null);
             Object app = activityThread.getMethod("getApplication").invoke(thread);
             if (app == null) {
-                throw  new NullPointerException("u should init first");
+                return null;
             }
             return (Application) app;
         } catch (NoSuchMethodException e) {
@@ -113,7 +115,7 @@ public final class AppUtils {
         }catch (NullPointerException e){
             e.printStackTrace();
         }
-        throw new NullPointerException("u should init first");
+       return null;
     }
 
     static ActivityLifecycleImpl getActivityLifecycle() {
