@@ -5,7 +5,7 @@ android {
     defaultConfig {
         applicationId "com.jeremyliao.livedatabus"
         minSdkVersion 16
-        targetSdkVersion 31
+        targetSdkVersion 34
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
